@@ -13,12 +13,26 @@ namespace My_MitBud.Models
         public string ExternalAccessToken { get; set; }
     }
 
+    public class LoginUserBindingModel
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
+
     public class ChangePasswordBindingModel
     {
         [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        //[Required]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Current password")]
+        //public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -30,7 +44,14 @@ namespace My_MitBud.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Code { get; set; }
     }
+
+
+
+
+
 
     public class RegisterBindingModel
     {
@@ -48,6 +69,64 @@ namespace My_MitBud.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string Name { get; set; }
+        public string UserId { get; set; }
+        public string CompanyName { get; set; }
+        public string CompanySize { get; set; }
+        public string Telephone { get; set; }
+        public string Category { get; set; }
+        public string City { get; set; }
+        public string CVR { get; set; }
+        public string ContactPerson { get; set; }
+        public string Address { get; set; }
+        public int PostCode { get; set; }
+
+    }
+
+
+    public class Register
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+
+    }
+    public class RegisterClient : Register
+    {
+
+
+
+
+    }
+
+    public class RegisterCompany : Register
+    {
+
+        public string CompanyName { get; set; }
+        public string CompanySize { get; set; }
+        public string Telephone { get; set; }
+        public string Category { get; set; }
+        public string City { get; set; }
+        public string CVR { get; set; }
+        public string ContactPerson { get; set; }
+        public string Address { get; set; }
+        public int PostCode { get; set; }
+
+
     }
 
     public class RegisterExternalBindingModel

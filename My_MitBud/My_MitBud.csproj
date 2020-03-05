@@ -45,10 +45,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Identity, Version=2.1.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Identity.2.1.6\lib\netstandard2.0\Microsoft.AspNetCore.Identity.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -124,9 +131,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
@@ -176,6 +180,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -206,16 +211,76 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DAL\AspNetRole.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\AspNetUser.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\AspNetUserClaim.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\AspNetUserLogin.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Category.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Client.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Company.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Company_Category.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Conversation.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\C__MigrationHistory.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\My_MitBud.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>My_MitBud.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\My_MitBud.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\My_MitBud.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>My_MitBud.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\sysdiagram.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Task.cs">
+      <DependentUpon>My_MitBud.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CompanyTaskViewModel.cs" />
+    <Compile Include="Models\ConversationViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Providers\ClientProvider.cs" />
+    <Compile Include="Providers\CompanyProvider.cs" />
+    <Compile Include="Providers\TaskProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -225,6 +290,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DAL\My_MitBud.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>My_MitBud.edmx</DependentUpon>
+      <LastGenOutput>My_MitBud.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DAL\My_MitBud.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>My_MitBud.edmx</DependentUpon>
+      <LastGenOutput>My_MitBud.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -249,6 +324,13 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <EntityDeploy Include="DAL\My_MitBud.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>My_MitBud.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DAL\My_MitBud.edmx.diagram">
+      <DependentUpon>My_MitBud.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -306,6 +388,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
