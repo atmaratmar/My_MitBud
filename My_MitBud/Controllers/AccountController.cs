@@ -19,6 +19,7 @@ using My_MitBud.Results;
 
 namespace My_MitBud.Controllers
 {
+    //´delete me
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
